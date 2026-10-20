@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>JBC Signage Admin</title>
+    <link rel="icon" href="../assets/club-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="admin.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>JBC Signage Admin</h1>
+      <nav id="tabs" class="tabs" role="tablist" aria-label="Sections"></nav>
+      <div class="savebar">
+        <span id="save-status" role="status">Loading…</span>
+        <button id="revert" type="button" class="secondary">Discard changes</button>
+        <button id="save" type="button" class="primary" disabled>Save changes</button>
+      </div>
+    </header>
+    <div id="notice" class="notice" hidden></div>
+    <main id="view" class="view"></main>
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>

@@ -2,6 +2,7 @@ import { getPlayableSlides, selectPlaylist } from "./scheduler.js";
 import { renderSlide } from "./slides.js";
 import { startTicker } from "./ticker.js";
 import { renderWidgets } from "./widgets.js";
+import { loadCalendarEvents } from "./calendar.js";
 import { hideEmergency, showEmergency } from "./emergency.js";
 
 const REFRESH_INTERVAL = 15 * 60 * 1000;
@@ -36,9 +37,19 @@ function currentPlaylist() {
   return selectPlaylist(state.config.playlists, new Date());
 }
 
+function applyChrome(playlist) {
+  const slidesOnly = Boolean(playlist?.slidesOnly);
+  const hidden = ["header", "widgets", "footer"].filter((part) => slidesOnly || playlist?.hide?.[part]);
+  const shell = document.querySelector(".app-shell");
+  shell.dataset.hide = hidden.join(" ");
+  if (slidesOnly) shell.dataset.fill = "";
+  else delete shell.dataset.fill;
+}
+
 function showNextSlide() {
   if (!state) return;
   const playlist = currentPlaylist();
+  applyChrome(playlist);
   const available = getPlayableSlides(state.config.slides, playlist, new Date());
   if (!available.length) {
     stage.replaceChildren(Object.assign(document.createElement("div"), { className: "empty-state", textContent: "No slides are scheduled right now." }));
@@ -51,7 +62,9 @@ function showNextSlide() {
   const slide = available[(currentIndex + 1) % available.length];
   currentSlideId = slide.id;
   try {
-    stage.replaceChildren(renderSlide(slide, state.data));
+    const element = renderSlide(slide, state.data);
+    element.dataset.transition = slide.transition ?? state.config.transition ?? "rise";
+    stage.replaceChildren(element);
   } catch (error) {
     console.error(error);
     const failure = document.createElement("div");
@@ -68,6 +81,7 @@ function refreshClockAndSchedule() {
   updateClock();
   if (!state) return;
   const playlist = currentPlaylist();
+  applyChrome(playlist);
   if (!playlist?.slideIds?.includes(currentSlideId)) showNextSlide();
   renderWidgets(state.config, state.data, document.querySelector("#widget-bar"));
 }
@@ -99,6 +113,7 @@ async function reloadContent() {
       loadData(config),
       Promise.all(config.playlists.map(async (playlist) => ({ ...playlist, ...(await fetchJson(playlist.file)) }))),
     ]);
+    data.events = { ...data.events, items: await loadCalendarEvents(config, data.events?.items ?? [], fetchJson) };
     state = { config: { ...config, playlists }, data };
     document.querySelector("#club-name").textContent = config.clubName ?? "Bridge Club";
     startTicker(config.ticker ?? [], document.querySelector("#ticker-track"));

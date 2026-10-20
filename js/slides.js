@@ -1,3 +1,6 @@
+import { renderMarkdown } from "./markdown.js";
+import { upcomingEvents } from "./calendar.js";
+
 const ELEMENT = (tag, className, text) => {
   const element = document.createElement(tag);
   if (className) element.className = className;
@@ -73,6 +76,64 @@ function renderHtml(slide) {
   return frame;
 }
 
+function renderPdf(slide) {
+  if (!safeLocalPath(slide.file)) throw new Error(`Slide "${slide.id}" has an invalid PDF path.`);
+  const frame = ELEMENT("iframe", "pdf-frame");
+  const page = Number(slide.page) > 0 ? `&page=${Math.floor(Number(slide.page))}` : "";
+  frame.src = `${slide.file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH${page}`;
+  frame.title = slide.title ?? "Club document";
+  return frame;
+}
+
+function renderMarkdownSlide(slide) {
+  const section = ELEMENT("section", "slide text-slide markdown-slide");
+  if (slide.kicker) section.append(ELEMENT("p", "kicker", slide.kicker));
+  if (slide.title) section.append(ELEMENT("h2", "", slide.title));
+  const body = ELEMENT("div", "markdown-body");
+  section.append(body);
+  if (slide.markdown != null) {
+    body.append(renderMarkdown(slide.markdown));
+  } else if (safeLocalPath(slide.file)) {
+    fetch(slide.file, { cache: "no-cache" })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Could not load ${slide.file} (${response.status}).`);
+        return response.text();
+      })
+      .then((text) => body.replaceChildren(renderMarkdown(text)))
+      .catch((error) => {
+        console.error(error);
+        body.textContent = "This slide's text is unavailable.";
+      });
+  } else {
+    throw new Error(`Slide "${slide.id}" needs markdown text or a valid .md file path.`);
+  }
+  return section;
+}
+
+function renderUpcoming(slide, events) {
+  const section = ELEMENT("section", "slide data-layout upcoming-layout");
+  const heading = ELEMENT("div");
+  heading.append(ELEMENT("p", "kicker", slide.kicker ?? "Coming up"));
+  heading.append(ELEMENT("h2", "", slide.title ?? "Upcoming events"));
+  if (slide.description) heading.append(ELEMENT("p", "description", slide.description));
+  section.append(heading);
+  const list = ELEMENT("div", "data-list");
+  for (const event of upcomingEvents(events, new Date(), slide.limit ?? 5, slide.days ?? 60)) {
+    const when = new Date(event.date);
+    const hasTime = /T\d{2}:\d{2}/.test(event.date);
+    const row = ELEMENT("div", "data-row event-row");
+    row.append(ELEMENT("span", "rank", when.toLocaleDateString("en-AU", { day: "numeric", month: "short" })));
+    const name = ELEMENT("span", "", event.title);
+    if (event.redPoint) name.append(ELEMENT("span", "red-point", " ● Red point"));
+    row.append(name);
+    row.append(ELEMENT("span", "value", [when.toLocaleDateString("en-AU", { weekday: "short" }), hasTime ? when.toLocaleTimeString("en-AU", { hour: "numeric", minute: "2-digit" }) : ""].filter(Boolean).join(" ")));
+    list.append(row);
+  }
+  if (!list.childElementCount) list.append(ELEMENT("p", "description", "No events are scheduled right now. Check back soon."));
+  section.append(list);
+  return section;
+}
+
 function renderSponsor(slide) {
   const section = ELEMENT("section", "slide sponsor-layout");
   section.append(ELEMENT("div", "sponsor-mark", slide.mark ?? slide.sponsor?.slice(0, 2) ?? "JBC"));
@@ -114,6 +175,9 @@ export function renderSlide(slide, data = {}) {
     case "html": return renderHtml(slide);
     case "announcement": return makeTextSlide(slide, true);
     case "event": return makeTextSlide({ ...slide, kicker: slide.kicker ?? "Upcoming event" });
+    case "markdown": return renderMarkdownSlide(slide);
+    case "pdf": return renderPdf(slide);
+    case "upcoming": return renderUpcoming(slide, data.events?.items ?? []);
     case "sponsor": return renderSponsor(slide);
     case "leaderboard": return makeDataSlide(slide, rows);
     case "results": return makeDataSlide(slide, rows, slide.title ?? "Recent results");

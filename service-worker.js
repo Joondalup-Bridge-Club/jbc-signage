@@ -1,4 +1,4 @@
-const CACHE_NAME = "jbc-signage-v1";
+const CACHE_NAME = "jbc-signage-v4";
 const CORE_FILES = [
   "./",
   "./index.html",
@@ -9,6 +9,8 @@ const CORE_FILES = [
   "./js/ticker.js",
   "./js/widgets.js",
   "./js/emergency.js",
+  "./js/markdown.js",
+  "./js/calendar.js",
   "./config/signage.json",
   "./config/emergency.json",
   "./config/playlists/day.json",

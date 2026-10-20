@@ -16,10 +16,23 @@ A static, browser-based signage player for the club TV. It rotates promotional s
 
 Use a local web server rather than opening `index.html` as a `file://` URL: browsers require HTTP(S) for ES modules, fetch requests and service workers.
 
+## Admin GUI (local only)
+
+Volunteers can manage slides, playlists, schedules, events and club data without editing JSON by hand. The admin GUI is **not** deployed as an editor: it runs on a computer with a checkout of this repository, served by a small Node.js helper (built-ins only, no install step).
+
+```sh
+node tools/admin-server.js          # optional port argument, default 8787
+```
+
+Open <http://localhost:8787/admin/>. Drag the ⠿ handles (mouse or touch) to reorder slides, then press **Save changes**. Edits are written to the project JSON files; review, commit and push them in VS Code to publish. The browser never holds GitHub credentials.
+
+The helper listens on `127.0.0.1` only, rejects other host names and cross-site requests, and can only write an allowlist: `config/signage.json`, `config/emergency.json`, `config/playlists/*.json`, `data/*.json`, `tools/source/club-data.json`, plus uploads of images, PDFs, Markdown and video into `slides/`. The signage player stays fully static.
+
 ## Project structure
 
 ```text
 index.html                 Signage page
+admin/                     Local admin GUI (used with tools/admin-server.js)
 css/style.css              TV-first, responsive dark theme
 js/                        Player, reusable slide renderers, scheduler and widgets
 config/signage.json        Slides, playlists, widgets and ticker configuration
@@ -27,16 +40,19 @@ config/emergency.json      Emergency message switch
 config/playlists/          Day, evening, weekend and special-event playlists
 data/                      Generated or volunteer-maintained JSON data
 slides/                    Canva exports and included working sample slides
+tools/admin-server.js      Local-only helper that serves the admin GUI and saves JSON
 tools/generate-data.js     Optional Node.js data-file generator
 tools/source/              Input JSON for the data generator
 providers/                 Design notes for future data-source adapters
 service-worker.js          Static asset and JSON offline cache
-docs/                      Content-management guidance
+docs/                      Content-management guidance and API options
 ```
 
 ## Content and slide types
 
-The signage player reads all content from JSON and local assets. Supported slide types are `image`, `video`, `html`, `announcement`, `event`, `sponsor`, `leaderboard`, `results`, `statistics` and `countdown`. See [content management](./docs/content-management.md) for slide fields, data shapes, scheduling and emergency-message examples.
+The signage player reads all content from JSON and local assets. Supported slide types are `image`, `video`, `html`, `pdf`, `markdown`, `upcoming`, `announcement`, `event`, `sponsor`, `leaderboard`, `results`, `statistics` and `countdown`. See [content management](./docs/content-management.md) for slide fields, data shapes, scheduling and emergency-message examples.
+
+Live data from an API is not implemented yet; the options are written up in [API options](./docs/api-options.md).
 
 The four included sample art slides are SVGs; replace them with your Canva exports whenever ready. To add a Canva slide:
 
