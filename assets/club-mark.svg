@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Joondalup Bridge Club">
+  <circle cx="32" cy="32" r="31" fill="#123849" stroke="#7de0c3" stroke-width="2"/>
+  <path d="M20 18c7-7 20-2 20 6 0 5-4 7-8 8 6 0 11 3 11 9 0 9-13 13-22 5l5-6c5 4 9 2 9 0 0-2-2-3-7-3h-5v-8h5c4 0 6-1 6-3 0-3-5-4-9 0z" fill="#f4f7f8"/>
+  <path d="M12 49h40" stroke="#7de0c3" stroke-width="2" stroke-linecap="round"/>
+</svg>

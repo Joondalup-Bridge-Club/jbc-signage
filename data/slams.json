@@ -1,0 +1,20 @@
+{
+  "updated": "2026-10-20",
+  "items": [
+    {
+      "rank": 1,
+      "name": "John Smith",
+      "value": "5 slams"
+    },
+    {
+      "rank": 2,
+      "name": "Mary Jones",
+      "value": "3 slams"
+    },
+    {
+      "rank": 3,
+      "name": "David Brown",
+      "value": "2 slams"
+    }
+  ]
+}

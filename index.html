@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131d">
+    <meta name="description" content="Joondalup Bridge Club digital signage">
+    <title>Joondalup Bridge Club</title>
+    <link rel="icon" href="assets/club-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <div class="club-brand">
+          <img class="club-logo" src="assets/club-mark.svg" alt="" width="58" height="58">
+          <div>
+            <p class="eyebrow">Joondalup</p>
+            <h1 id="club-name">Bridge Club</h1>
+          </div>
+        </div>
+        <div class="clock" aria-label="Current date and time">
+          <time id="current-time">--:--</time>
+          <span id="current-date">Loading date…</span>
+        </div>
+      </header>
+
+      <main id="slide-stage" class="slide-stage" aria-live="polite" aria-atomic="true">
+        <div class="loading-state">Loading club information…</div>
+      </main>
+
+      <aside id="widget-bar" class="widget-bar" aria-label="Club information"></aside>
+
+      <footer class="site-footer">
+        <span class="ticker-label">CLUB NEWS</span>
+        <div class="ticker-window">
+          <div id="ticker-track" class="ticker-track"></div>
+        </div>
+        <span id="connection-state" class="connection-state">Connecting</span>
+      </footer>
+    </div>
+
+    <section id="emergency-overlay" class="emergency-overlay" hidden role="alertdialog" aria-modal="true" aria-labelledby="emergency-title">
+      <div class="emergency-card">
+        <p class="eyebrow">Important club notice</p>
+        <h2 id="emergency-title">Venue update</h2>
+        <p id="emergency-message"></p>
+      </div>
+    </section>
+
+    <script type="module" src="js/player.js"></script>
+  </body>
+</html>

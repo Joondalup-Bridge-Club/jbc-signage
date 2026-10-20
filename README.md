@@ -1,377 +1,115 @@
-Build a production-quality digital signage platform for Joondalup Bridge Club.
+# Joondalup Bridge Club Digital Signage
 
-# Objective
+A static, browser-based signage player for the club TV. It rotates promotional slides, club announcements, event information and JSON-driven results; it needs no server-side runtime, package installation or build step. Publish this repository to GitHub Pages or Cloudflare Pages and open the site in a full-screen browser.
 
-Create a browser-based digital signage system that runs continuously on a TV in kiosk mode.
+## Quick start
 
-The system will be hosted on Cloudflare Pages and managed through GitHub.
+1. Clone the repository.
+2. From the repository folder, start a local static server:
 
-The display must combine:
+   ```sh
+   python3 -m http.server 8000
+   ```
 
-1. Canva-generated promotional content
-2. Automatically generated club statistics
-3. Results and leaderboards
-4. Upcoming events
-5. Sponsor recognition
-6. Club announcements
+3. Open <http://localhost:8000> in a browser.
+4. Change the JSON files in `config/` and `data/` to try different announcements, schedules and results.
 
-The system must require minimal technical knowledge for volunteers.
+Use a local web server rather than opening `index.html` as a `file://` URL: browsers require HTTP(S) for ES modules, fetch requests and service workers.
 
----
+## Project structure
 
-# Technology
+```text
+index.html                 Signage page
+css/style.css              TV-first, responsive dark theme
+js/                        Player, reusable slide renderers, scheduler and widgets
+config/signage.json        Slides, playlists, widgets and ticker configuration
+config/emergency.json      Emergency message switch
+config/playlists/          Day, evening, weekend and special-event playlists
+data/                      Generated or volunteer-maintained JSON data
+slides/                    Canva exports and included working sample slides
+tools/generate-data.js     Optional Node.js data-file generator
+tools/source/              Input JSON for the data generator
+providers/                 Design notes for future data-source adapters
+service-worker.js          Static asset and JSON offline cache
+docs/                      Content-management guidance
+```
 
-Use:
+## Content and slide types
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- ES6 Modules
+The signage player reads all content from JSON and local assets. Supported slide types are `image`, `video`, `html`, `announcement`, `event`, `sponsor`, `leaderboard`, `results`, `statistics` and `countdown`. See [content management](./docs/content-management.md) for slide fields, data shapes, scheduling and emergency-message examples.
 
-Do NOT use:
+The four included sample art slides are SVGs; replace them with your Canva exports whenever ready. To add a Canva slide:
 
-- React
-- Angular
-- Vue
-- jQuery
-- Build tools
-- Node runtime dependencies for the player
+1. Create a landscape design in Canva and export it as a PNG.
+2. Copy the PNG into `slides/`.
+3. Add a slide entry to `config/signage.json` and its `id` to the appropriate playlist file in `config/playlists/`.
+4. Commit and push. The display refreshes content every 15 minutes.
 
-The signage player must work as a completely static website.
+Static hosts do not provide a portable directory-listing API. For that reason the player cannot automatically discover a newly copied image; adding its JSON entry is required, but no JavaScript changes are needed.
 
----
+## Club data generator
 
-# Architecture
+The player only reads the published JSON files and never connects to a database. To regenerate results, masterpoints, slams and events from the included example source:
 
-Create:
+```sh
+node tools/generate-data.js
+```
 
-/
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   ├── player.js
-│   ├── scheduler.js
-│   ├── slides.js
-│   ├── ticker.js
-│   ├── widgets.js
-│   └── emergency.js
-├── config/
-│   ├── signage.json
-│   ├── emergency.json
-│   └── playlists/
-├── data/
-│   ├── results.json
-│   ├── masterpoints.json
-│   ├── slams.json
-│   ├── birthdays.json
-│   └── events.json
-├── slides/
-├── assets/
-├── docs/
-└── README.md
+Edit `tools/source/club-data.json` with the club's current data before running it. The script uses Node.js built-ins only. Birthdays are edited directly in `data/birthdays.json`. Review generated files, then commit and push them with the rest of the site. Future Pianola, BridgeScore, CSV or REST integrations should normalize data outside the player; see [provider notes](./providers/README.md).
 
----
+## GitHub Pages deployment
 
-# Slide Types
+The included workflow at `.github/workflows/deploy-pages.yml` publishes the static site on pushes to `main`.
 
-Support:
+1. In the repository, open **Settings → Pages** and select **GitHub Actions** as the build and deployment source.
+2. Push a commit to `main` (or run the workflow manually from the Actions tab).
+3. Wait for the **Deploy to GitHub Pages** workflow to finish; open the URL shown in the Pages settings.
 
-- image
-- video
-- html
-- announcement
-- event
-- sponsor
-- leaderboard
-- results
-- statistics
-- countdown
+No custom build command is needed. If your default branch is not named `main`, update the workflow branch filter before enabling it.
 
-Each slide type must be implemented as a reusable renderer.
+## Cloudflare Pages deployment
 
----
+1. In the Cloudflare dashboard, choose **Workers & Pages → Create → Pages → Connect to Git**.
+2. Select this GitHub repository and the production branch.
+3. Set **Framework preset** to **None**, leave the build command blank, and set the build output directory to `/` (the repository root).
+4. Save and deploy. Subsequent pushes to the connected branch publish automatically.
 
-# Canva Integration
+The player has no third-party runtime dependencies and works from a project subpath as well as a domain root.
 
-The club designs most promotional slides in Canva.
+## TV and kiosk setup
 
-Store exported Canva PNG files in:
+For every display, use the deployed HTTPS URL, configure the browser to launch at login/startup, enable automatic OS updates/restarts as appropriate, and disable display sleep. Confirm the display clock and timezone are set correctly because schedules use the device's local time. Keep the display connected to power and network; the service worker caches the app and recently fetched content for temporary internet outages.
 
-slides/
+### Raspberry Pi
 
-Examples:
+Use Raspberry Pi OS with desktop, install Chromium and `unclutter`, and configure the desktop session to launch Chromium after login. For example, add a Chromium command to the desktop autostart mechanism for the installed OS version:
 
-slides/
-  melbourne-cup.png
-  lessons.png
-  swiss-pairs.png
-  sponsors.png
+```sh
+chromium --kiosk --noerrdialogs --disable-infobars --disable-session-crashed-bubble https://YOUR-SITE.example/
+```
 
-The signage system should automatically display Canva slides without any code changes.
+Add `unclutter -idle 0.5 -root` to hide the pointer. Disable screen blanking in the desktop power settings. Newer Raspberry Pi OS releases have changed session/autostart defaults, so use their current desktop documentation for the correct autostart location.
 
-Volunteers should only need to:
+### Windows mini PC
 
-1. Create design in Canva
-2. Export PNG
-3. Copy file into slides folder
-4. Git commit
-5. Git push
+Install and update Microsoft Edge or Chrome. Create a startup shortcut with the browser executable and the following arguments, replacing the URL:
 
----
+```text
+--kiosk --no-first-run --disable-features=Translate https://YOUR-SITE.example/
+```
 
-# Dynamic Data Slides
+Put the shortcut in the signed-in account's Startup folder (`shell:startup`). Set Windows power options to never sleep or turn off the display while plugged in. For managed unattended machines, use a dedicated standard user account and configure automatic sign-in only if consistent with the club's physical security requirements.
 
-Generate slides from JSON data.
+### Android TV
 
-Support:
+Use a kiosk-capable browser that supports auto-launch after boot, full-screen display, and screen-awake mode. Configure the site URL as its start page, enable start-on-boot and keep-screen-on, and hide browser controls. Menu names and capabilities differ by TV manufacturer; check that browser updates do not reset kiosk settings.
 
-results.json
-masterpoints.json
-slams.json
-birthdays.json
-events.json
+## Offline behavior and emergency messages
 
-Examples:
+The service worker precaches the player and sample JSON, caches same-origin content as it is fetched, and uses cached responses when the network is unavailable. Newly added slides are available offline after they have been displayed at least once. A deployment update is fetched on the next refresh/reload. Test offline startup on the actual TV before relying on it.
 
-Grand Slams This Year
+Set `enabled` to `true` and enter the message in `config/emergency.json` to show the full-screen venue notice. The player checks for emergency changes once per minute and pauses normal slides while an emergency is active.
 
-John Smith    5
-Mary Jones    3
-David Brown   2
+## Accessibility and display notes
 
----
-
-Monthly Masterpoints
-
-1. Jones/Smith      2.15
-2. Brown/White      1.87
-3. Green/Black      1.55
-
----
-
-Most Improved Pair
-
-+0.42 MPs
-
-John Smith
-Mary Jones
-
----
-
-# Scheduling
-
-Support:
-
-- days of week
-- time ranges
-- date ranges
-- expiry dates
-- recurring schedules
-
-Example:
-
-{
-  "days": ["Mon","Wed"],
-  "start": "08:00",
-  "end": "17:00"
-}
-
-Slides automatically appear and disappear according to schedule.
-
----
-
-# Playlist Support
-
-Create:
-
-day playlist
-evening playlist
-weekend playlist
-special event playlist
-
-System automatically selects playlist based on current time.
-
-Example:
-
-06:00 - 16:00 Day
-
-16:00 - 22:00 Evening
-
-22:00 - 06:00 Overnight
-
----
-
-# Header
-
-Display:
-
-- Club logo
-- Current date
-- Current time
-
-Update time every second.
-
----
-
-# Footer
-
-Scrolling ticker.
-
-Ticker text stored in configuration.
-
-Example:
-
-Welcome to Joondalup Bridge Club
-
-Lessons Available
-
-Next Red Point Event Friday
-
-Visitors Welcome
-
----
-
-# Emergency Override
-
-If emergency.json contains:
-
-{
-  "enabled": true,
-  "message": "Venue Closed Today"
-}
-
-Display a full-screen overlay.
-
-Suspend normal operation.
-
----
-
-# Widgets
-
-Create optional widgets:
-
-- countdown to next event
-- weather placeholder
-- birthday recognitions
-- today's sessions
-- next red point event
-
-Widgets can be enabled or disabled via JSON.
-
----
-
-# Dynamic Content Generator
-
-Create a separate generator system.
-
-Folder:
-
-tools/
-
-Create:
-
-generate-data.js
-
-This script reads club data and produces JSON files for the signage player.
-
-Example outputs:
-
-data/results.json
-data/masterpoints.json
-data/slams.json
-data/events.json
-
-The player should only read JSON and never connect directly to a database.
-
----
-
-# Future Database Integration
-
-Design a provider architecture.
-
-Create:
-
-providers/
-
-with interfaces for:
-
-- Pianola
-- BridgeScore
-- CSV files
-- Custom REST API
-
-Future integrations should only require creating a new provider.
-
----
-
-# Offline Support
-
-Implement a Service Worker.
-
-Requirements:
-
-- Continue displaying existing content during internet outage
-- Fetch updates when internet returns
-
----
-
-# Visual Design
-
-Style requirements:
-
-- Modern
-- Professional
-- Easy to read from 5-10 metres
-- High contrast
-- Dark mode first
-- Large typography
-- Smooth fade transitions
-
-The signage should resemble commercial airport, conference, and event displays.
-
----
-
-# Sample Data
-
-Generate example:
-
-- Melbourne Cup slide
-- Lessons slide
-- Swiss Pairs slide
-- Sponsor slide
-- Results slide
-- Grand Slam leaderboard
-- Masterpoint leaderboard
-- Birthday slide
-
----
-
-# Documentation
-
-Create a complete README that explains:
-
-- local development
-- GitHub deployment
-- Cloudflare Pages deployment
-- Raspberry Pi kiosk setup
-- Windows kiosk setup
-- Android TV setup
-- how volunteers update Canva slides
-- how automated statistics are generated
-
----
-
-# Copilot Requirements
-
-Act as a senior software architect.
-
-Prioritise:
-
-1. Simplicity
-2. Reliability
-3. Static hosting compatibility
-4. Separation of concerns
-5. Volunteer usability
-
-Generate all files and code necessary for a complete working first version.
+The layout is designed for large screens and remains usable on a mobile browser for previewing. It uses a high-contrast dark theme, respects reduced-motion preferences, provides accessible alternative text for images, and renders configured text as text rather than HTML. A web font is not downloaded; typography uses system fonts so the player remains self-contained.

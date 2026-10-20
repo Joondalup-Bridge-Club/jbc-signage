@@ -1,0 +1,23 @@
+{
+  "updated": "2026-10-20",
+  "items": [
+    {
+      "id": "weekly-pairs",
+      "title": "Weekly duplicate pairs",
+      "date": "2026-10-23T13:00:00+08:00",
+      "description": "Arrive early to register."
+    },
+    {
+      "id": "red-point",
+      "title": "Red Point Swiss Pairs",
+      "date": "2026-11-06T13:00:00+08:00",
+      "redPoint": true
+    },
+    {
+      "id": "melbourne-cup",
+      "title": "Melbourne Cup Day",
+      "date": "2026-11-03T10:00:00+08:00",
+      "description": "Bridge, lunch and the race."
+    }
+  ]
+}

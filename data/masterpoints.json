@@ -1,0 +1,30 @@
+{
+  "updated": "2026-10-20",
+  "items": [
+    {
+      "rank": 1,
+      "name": "Jones / Smith",
+      "value": "2.15 MPs"
+    },
+    {
+      "rank": 2,
+      "name": "Brown / White",
+      "value": "1.87 MPs"
+    },
+    {
+      "rank": 3,
+      "name": "Green / Black",
+      "value": "1.55 MPs"
+    },
+    {
+      "rank": 4,
+      "name": "Taylor / Wilson",
+      "value": "1.34 MPs"
+    },
+    {
+      "rank": 5,
+      "name": "Martin / Lee",
+      "value": "1.10 MPs"
+    }
+  ]
+}

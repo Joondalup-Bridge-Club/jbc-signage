@@ -1,0 +1,26 @@
+{
+  "results": [
+    { "rank": 1, "pair": "Jones / Smith", "value": "68.42%" },
+    { "rank": 2, "pair": "Brown / White", "value": "64.18%" },
+    { "rank": 3, "pair": "Green / Black", "value": "61.75%" },
+    { "rank": 4, "pair": "Taylor / Wilson", "value": "59.80%" },
+    { "rank": 5, "pair": "Martin / Lee", "value": "58.26%" }
+  ],
+  "masterpoints": [
+    { "rank": 1, "name": "Jones / Smith", "value": "2.15 MPs" },
+    { "rank": 2, "name": "Brown / White", "value": "1.87 MPs" },
+    { "rank": 3, "name": "Green / Black", "value": "1.55 MPs" },
+    { "rank": 4, "name": "Taylor / Wilson", "value": "1.34 MPs" },
+    { "rank": 5, "name": "Martin / Lee", "value": "1.10 MPs" }
+  ],
+  "slams": [
+    { "rank": 1, "name": "John Smith", "value": "5 slams" },
+    { "rank": 2, "name": "Mary Jones", "value": "3 slams" },
+    { "rank": 3, "name": "David Brown", "value": "2 slams" }
+  ],
+  "events": [
+    { "id": "weekly-pairs", "title": "Weekly duplicate pairs", "date": "2026-10-23T13:00:00+08:00", "description": "Arrive early to register." },
+    { "id": "red-point", "title": "Red Point Swiss Pairs", "date": "2026-11-06T13:00:00+08:00", "redPoint": true },
+    { "id": "melbourne-cup", "title": "Melbourne Cup Day", "date": "2026-11-03T10:00:00+08:00", "description": "Bridge, lunch and the race." }
+  ]
+}

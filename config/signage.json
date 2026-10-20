@@ -1,0 +1,47 @@
+{
+  "clubName": "Joondalup Bridge Club",
+  "dataFiles": [
+    "data/results.json",
+    "data/masterpoints.json",
+    "data/slams.json",
+    "data/birthdays.json",
+    "data/events.json"
+  ],
+  "playlists": [
+    { "id": "special-event", "file": "config/playlists/special-event.json", "schedule": { "startDate": "2026-11-03", "endDate": "2026-11-03" }, "priority": 100 },
+    { "id": "weekend", "file": "config/playlists/weekend.json", "schedule": { "days": ["Sat", "Sun"] }, "priority": 20 },
+    { "id": "evening", "file": "config/playlists/evening.json", "schedule": { "start": "16:00", "end": "22:00" }, "priority": 10 },
+    { "id": "day", "file": "config/playlists/day.json", "priority": 0 }
+  ],
+  "slides": [
+    { "id": "welcome", "type": "announcement", "title": "Welcome to the club", "subtitle": "Good cards, great company.", "description": "Visitors and new members are always welcome.", "duration": 12 },
+    { "id": "melbourne-cup", "type": "event", "kicker": "Special club day", "title": "Melbourne Cup Day", "subtitle": "Tuesday 3 November · Join us for bridge, lunch and the race.", "duration": 12, "schedule": { "startDate": "2026-11-03", "endDate": "2026-11-03" } },
+    { "id": "lessons", "type": "announcement", "kicker": "Learn to play", "title": "Bridge lessons", "subtitle": "New players are welcome.", "description": "Ask at the reception desk for upcoming lesson dates.", "duration": 12 },
+    { "id": "swiss-pairs", "type": "event", "kicker": "Upcoming tournament", "title": "Swiss Pairs", "subtitle": "Friday · Entries are now open.", "description": "Contact the director or speak with a volunteer to register.", "duration": 12 },
+    { "id": "sponsors", "type": "sponsor", "sponsor": "Thank you to our sponsors", "mark": "JBC", "description": "Your support helps our club thrive.", "duration": 10 },
+    { "id": "latest-results", "type": "results", "title": "Latest results", "kicker": "At the tables", "dataSource": "results", "dataKey": "items", "duration": 12, "limit": 5 },
+    { "id": "grand-slams", "type": "leaderboard", "title": "Grand slams this year", "kicker": "Club leaderboard", "dataSource": "slams", "duration": 12, "limit": 5 },
+    { "id": "masterpoints", "type": "leaderboard", "title": "Monthly masterpoints", "kicker": "Club leaderboard", "dataSource": "masterpoints", "duration": 12, "limit": 5 },
+    { "id": "birthdays", "type": "leaderboard", "title": "Celebrating our members", "kicker": "Birthday wishes", "dataSource": "birthdays", "duration": 10, "limit": 5 },
+    { "id": "next-event", "type": "countdown", "title": "Coming up at the club", "duration": 10 },
+    { "id": "statistics", "type": "statistics", "title": "Most improved pair", "kicker": "This month", "dataSource": "masterpoints", "value": "+0.42 MPs", "description": "John Smith & Mary Jones", "duration": 10 },
+    { "id": "canva-melbourne-cup", "type": "image", "file": "slides/melbourne-cup.svg", "title": "Melbourne Cup Day", "alt": "Melbourne Cup Day at Joondalup Bridge Club", "duration": 15 },
+    { "id": "canva-lessons", "type": "image", "file": "slides/lessons.svg", "title": "Bridge lessons", "alt": "Bridge lessons for beginners", "duration": 15 },
+    { "id": "canva-swiss-pairs", "type": "image", "file": "slides/swiss-pairs.svg", "title": "Swiss Pairs", "alt": "Swiss Pairs event", "duration": 15 },
+    { "id": "canva-sponsor", "type": "image", "file": "slides/sponsors.svg", "title": "Our sponsors", "alt": "Club sponsor recognition", "duration": 15 }
+  ],
+  "ticker": [
+    "Welcome to Joondalup Bridge Club",
+    "Lessons available for beginners",
+    "Next Swiss Pairs Friday",
+    "Visitors welcome"
+  ],
+  "widgets": {
+    "countdown": true,
+    "weather": true,
+    "birthdays": true,
+    "todaysSessions": true,
+    "nextRedPoint": true
+  },
+  "weatherPlaceholder": "Local forecast unavailable"
+}

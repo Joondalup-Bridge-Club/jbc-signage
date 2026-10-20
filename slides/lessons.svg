@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#17443f"/><stop offset="1" stop-color="#07131d"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1260" cy="390" r="230" fill="#7de0c3" opacity=".10"/>
+  <text x="140" y="245" fill="#7de0c3" font-family="Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="9">YOUR NEXT GREAT HAND STARTS HERE</text>
+  <text x="130" y="440" fill="#fff" font-family="Arial,sans-serif" font-size="118" font-weight="700">Learn bridge</text>
+  <text x="140" y="525" fill="#e0e9ec" font-family="Arial,sans-serif" font-size="43">Friendly lessons for beginners · Everyone welcome</text>
+  <rect x="140" y="630" width="400" height="72" rx="36" fill="#7de0c3"/>
+  <text x="195" y="677" fill="#071d23" font-family="Arial,sans-serif" font-size="26" font-weight="700">ASK US FOR DETAILS</text>
+</svg>

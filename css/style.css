@@ -1,0 +1,93 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #07131d;
+  color: #f4f7f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --muted: #a8bac3;
+  --accent: #7de0c3;
+  --panel: #10232f;
+  --line: rgb(255 255 255 / 12%);
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; min-width: 320px; min-height: 100%; margin: 0; }
+body { min-height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 54% 35%, #173244 0, #0b1b27 46%, #07131d 100%); }
+.app-shell { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto auto; width: 100%; min-width: 0; height: 100vh; min-height: 520px; padding: clamp(20px, 3.4vw, 62px) clamp(24px, 5vw, 96px) 0; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 92px; }
+.club-brand { display: flex; align-items: center; gap: 17px; }
+.club-logo { flex: 0 0 auto; border-radius: 50%; }
+.eyebrow { margin: 0 0 5px; color: var(--accent); font-size: clamp(12px, 1vw, 18px); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+.club-brand h1 { margin: 0; font: 700 clamp(23px, 2.2vw, 40px)/1.1 "Segoe UI", Arial, sans-serif; letter-spacing: -.035em; }
+.clock { display: grid; justify-items: end; gap: 5px; color: var(--muted); font-size: clamp(13px, 1.1vw, 20px); }
+.clock time { color: #fff; font: 700 clamp(26px, 2.35vw, 44px)/1 "Segoe UI", Arial, sans-serif; font-variant-numeric: tabular-nums; }
+.slide-stage { position: relative; display: grid; width: 100%; min-width: 0; min-height: 0; align-items: center; justify-items: center; overflow: hidden; padding: clamp(24px, 4vw, 72px) 0; }
+.loading-state, .empty-state { color: var(--muted); font-size: clamp(24px, 3vw, 52px); text-align: center; }
+.slide { width: min(100%, 1500px); min-width: 0; max-height: 100%; animation: appear .8s ease both; }
+.slide h2 { margin-bottom: 22px; font: 800 clamp(38px, 6vw, 104px)/1.03 "Segoe UI", Arial, sans-serif; letter-spacing: -.055em; }
+.slide h3 { font: 700 clamp(24px, 3vw, 48px)/1.15 "Segoe UI", Arial, sans-serif; }
+.slide .kicker { margin-bottom: 18px; color: var(--accent); font-size: clamp(14px, 1.5vw, 24px); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.slide .subtitle, .slide .description { max-width: 1100px; color: #d5e0e4; font-size: clamp(21px, 2.7vw, 46px); line-height: 1.4; }
+.text-slide { display: flex; width: 100%; min-width: 0; min-height: min(58vh, 720px); flex-direction: column; justify-content: center; padding: clamp(32px, 6vw, 100px); border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(135deg, rgb(19 49 63 / 92%), rgb(11 28 40 / 92%)); box-shadow: 0 28px 80px rgb(0 0 0 / 24%); }
+.text-slide.center { align-items: center; text-align: center; }
+.slide-image { width: 100%; max-height: min(65vh, 850px); border-radius: 14px; object-fit: contain; }
+.slide-video, .html-frame { width: 100%; height: min(65vh, 850px); border: 0; border-radius: 14px; background: #000; }
+.html-frame { background: #fff; }
+.data-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr); align-items: center; gap: clamp(40px, 8vw, 140px); }
+.data-list { display: grid; gap: 12px; }
+.data-row { display: grid; grid-template-columns: 70px 1fr auto; align-items: center; gap: 20px; padding: 18px 24px; border-bottom: 1px solid var(--line); font-size: clamp(20px, 2.1vw, 36px); }
+.data-row .rank { color: var(--accent); font-weight: 800; }
+.data-row .value { color: #d4e2e6; font-weight: 700; text-align: right; }
+.highlight-number { color: var(--accent); font: 800 clamp(60px, 10vw, 160px)/1 "Segoe UI", Arial, sans-serif; letter-spacing: -.07em; }
+.event-date { display: inline-block; margin: 8px 0 24px; padding: 10px 18px; border: 1px solid rgb(125 224 195 / 40%); border-radius: 999px; color: var(--accent); font-size: clamp(18px, 1.8vw, 30px); font-weight: 700; }
+.sponsor-mark { display: grid; width: clamp(130px, 18vw, 270px); aspect-ratio: 1; place-items: center; border: 1px solid rgb(255 255 255 / 20%); border-radius: 50%; background: rgb(255 255 255 / 5%); color: var(--accent); font: 800 clamp(22px, 3vw, 48px) "Segoe UI", Arial, sans-serif; text-align: center; }
+.sponsor-layout { display: flex; align-items: center; gap: clamp(32px, 7vw, 110px); }
+.widget-bar { display: flex; align-items: stretch; gap: 14px; min-height: 0; padding: 0 0 22px; }
+.widget { flex: 1; min-width: 0; padding: 13px 18px; border: 1px solid var(--line); border-radius: 9px; background: rgb(16 35 47 / 78%); }
+.widget-label { display: block; margin-bottom: 5px; color: var(--muted); font-size: clamp(10px, .75vw, 13px); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.widget-value { display: block; overflow: hidden; color: #fff; font-size: clamp(14px, 1.15vw, 20px); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.site-footer { display: flex; align-items: center; gap: 20px; min-height: 58px; margin: 0 calc(clamp(24px, 5vw, 96px) * -1); padding: 0 clamp(24px, 5vw, 96px); border-top: 1px solid var(--line); background: rgb(4 13 20 / 70%); }
+.ticker-label { flex: 0 0 auto; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+.ticker-window { flex: 1; overflow: hidden; }
+.ticker-track { display: flex; width: max-content; animation: ticker-scroll 36s linear infinite; }
+.ticker-item { padding-right: 70px; color: #d7e2e5; font-size: clamp(14px, 1vw, 18px); white-space: nowrap; }
+.ticker-item::after { content: "•"; padding-left: 70px; color: var(--accent); }
+.connection-state { flex: 0 0 auto; color: var(--muted); font-size: 12px; }
+.connection-state.offline { color: #ffbf69; }
+.emergency-overlay { position: fixed; z-index: 5; inset: 0; display: grid; place-items: center; padding: 7vw; background: #a51d26; }
+.emergency-overlay[hidden] { display: none; }
+.emergency-card { width: min(1200px, 100%); text-align: center; }
+.emergency-card .eyebrow { color: #ffd6b3; }
+.emergency-card h2 { margin-bottom: 24px; font: 800 clamp(48px, 8vw, 128px)/1 "Segoe UI", Arial, sans-serif; }
+.emergency-card p:last-child { margin: 0; font-size: clamp(26px, 4vw, 64px); line-height: 1.3; }
+@keyframes appear { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (max-width: 700px) {
+  body { overflow: auto; }
+  .app-shell { min-height: 100svh; height: 100svh; padding: 18px 18px 0; }
+  .site-header { min-height: 70px; }
+  .club-logo { width: 42px; height: 42px; }
+  .club-brand { gap: 10px; }
+  .club-brand h1 { font-size: 19px; }
+  .clock { font-size: 11px; }
+  .clock time { font-size: 25px; }
+  .slide-stage { padding: 20px 0; }
+  .slide h2 { font-size: clamp(36px, 11vw, 64px); }
+  .text-slide { min-height: 50vh; padding: 28px; }
+  .data-layout { grid-template-columns: 1fr; gap: 24px; }
+  .data-row { grid-template-columns: 38px 1fr auto; gap: 9px; padding: 12px 4px; }
+  .sponsor-layout { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .sponsor-mark { width: 110px; }
+  .widget-bar { overflow-x: auto; padding-bottom: 12px; }
+  .widget { flex: 0 0 180px; }
+  .site-footer { min-height: 48px; gap: 10px; margin: 0 -18px; padding: 0 18px; }
+  .ticker-label { font-size: 9px; }
+  .connection-state { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

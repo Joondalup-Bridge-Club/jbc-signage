@@ -1,0 +1,30 @@
+{
+  "updated": "2026-10-20",
+  "items": [
+    {
+      "rank": 1,
+      "pair": "Jones / Smith",
+      "value": "68.42%"
+    },
+    {
+      "rank": 2,
+      "pair": "Brown / White",
+      "value": "64.18%"
+    },
+    {
+      "rank": 3,
+      "pair": "Green / Black",
+      "value": "61.75%"
+    },
+    {
+      "rank": 4,
+      "pair": "Taylor / Wilson",
+      "value": "59.80%"
+    },
+    {
+      "rank": 5,
+      "pair": "Martin / Lee",
+      "value": "58.26%"
+    }
+  ]
+}
