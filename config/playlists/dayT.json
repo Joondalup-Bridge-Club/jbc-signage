@@ -2,6 +2,18 @@
   "name": "DayT",
   "slideIds": [
     "welcome",
-    "etiquette-cards-down"
-  ]
+    "2026-10-22-now",
+    "2026-awrp-now",
+    "november-monday-u35-best-of-5",
+    "2026-melbourne-cup-11am",
+    "2026-club-championships-register",
+    "etiquette-cards-down",
+    "2026-christmas-date"
+  ],
+  "hide": {
+    "header": true,
+    "widgets": true,
+    "footer": true
+  },
+  "slidesOnly": true
 }

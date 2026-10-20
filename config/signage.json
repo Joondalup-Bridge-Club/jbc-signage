@@ -1,5 +1,9 @@
 {
   "clubName": "Joondalup Bridge Club",
+  "transition": "fade",
+  "calendar": {
+    "feedUrl": ""
+  },
   "dataFiles": [
     "data/results.json",
     "data/masterpoints.json",
@@ -50,6 +54,11 @@
       "id": "day",
       "file": "config/playlists/day.json",
       "priority": 0
+    },
+    {
+      "id": "daily",
+      "file": "config/playlists/daily.json",
+      "priority": 5
     }
   ],
   "slides": [
@@ -137,6 +146,22 @@
       "limit": 5
     },
     {
+      "id": "upcoming-events",
+      "type": "upcoming",
+      "title": "Upcoming events",
+      "kicker": "What's on",
+      "duration": 12,
+      "limit": 5
+    },
+    {
+      "id": "house-rules",
+      "type": "markdown",
+      "title": "Club reminders",
+      "markdown": "- Please **silence your phone** at the table\n- Arrive 15 minutes early to register\n- Visitors are *always* welcome",
+      "duration": 12,
+      "transition": "slide-left"
+    },
+    {
       "id": "next-event",
       "type": "countdown",
       "title": "Coming up at the club",
@@ -191,6 +216,78 @@
       "title": "Cards Down",
       "alt": "Etiquette Cards Down",
       "duration": 15
+    },
+    {
+      "id": "2026-10-22-now",
+      "type": "image",
+      "title": "2026 10 22 Now",
+      "file": "slides/2026-10-22 Now.png",
+      "duration": 15,
+      "alt": "2026 10 22 Now"
+    },
+    {
+      "id": "2026-awrp-now",
+      "type": "image",
+      "title": "2026 AWRP Now",
+      "file": "slides/2026 AWRP Now.png",
+      "duration": 15,
+      "alt": "2026 AWRP Now"
+    },
+    {
+      "id": "november-monday-u35-best-of-5",
+      "type": "image",
+      "title": "November Monday U35 Best of 5",
+      "file": "slides/November Monday U35 Best of 5.jpg",
+      "duration": 15,
+      "alt": "November Monday U35 Best of 5"
+    },
+    {
+      "id": "2026-melbourne-cup-11am",
+      "type": "image",
+      "title": "2026 Melbourne Cup 11AM",
+      "file": "slides/2026 Melbourne Cup 11AM.png",
+      "duration": 15,
+      "alt": "2026 Melbourne Cup 11AM"
+    },
+    {
+      "id": "2026-club-championships-register",
+      "type": "image",
+      "title": "2026 Club Championships Register",
+      "file": "slides/2026 Club Championships Register.png",
+      "duration": 15,
+      "alt": "2026 Club Championships Register"
+    },
+    {
+      "id": "2026-cc1",
+      "type": "image",
+      "title": "2026 CC1",
+      "file": "slides/2026 CC1.png",
+      "duration": 15,
+      "alt": "2026 CC1"
+    },
+    {
+      "id": "2026-cc2",
+      "type": "image",
+      "title": "2026 CC2",
+      "file": "slides/2026 CC2.png",
+      "duration": 15,
+      "alt": "2026 CC2"
+    },
+    {
+      "id": "2026-cc3",
+      "type": "image",
+      "title": "2026 CC3",
+      "file": "slides/2026 CC3.png",
+      "duration": 15,
+      "alt": "2026 CC3"
+    },
+    {
+      "id": "2026-christmas-date",
+      "type": "image",
+      "title": "2026 Christmas Date",
+      "file": "slides/2026 Christmas Date.png",
+      "duration": 15,
+      "alt": "2026 Christmas Date"
     }
   ],
   "ticker": [
